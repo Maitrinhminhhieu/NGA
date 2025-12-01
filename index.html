@@ -1,0 +1,1658 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday – Thanh Nga • Created by Shota</title>
+  <style>
+    :root {
+      --glass-bg: rgba(255, 255, 255, 0.12);
+      --glass-border: rgba(255, 255, 255, 0.5);
+      --glass-soft: rgba(255, 255, 255, 0.2);
+
+      --accent: #ff9ac6;
+      --accent-2: #ffe48f;
+      --accent-blue: #b3e5ff;
+
+      --text-main: #0b1220;
+      --text-soft: #1f2933;
+      --text-soft-light: #4b5563;
+
+      --error: #ef4444;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Helvetica Neue", Arial, sans-serif;
+      min-height: 100vh;
+      color: var(--text-main);
+      background:
+        radial-gradient(circle at 0% 0%, #fdfbff 0%, #f5f5ff 25%, transparent 55%),
+        radial-gradient(circle at 100% 0%, #e3f4ff 0%, #fef5ff 35%, transparent 55%),
+        radial-gradient(circle at 0% 100%, #fff0f4 0%, #fdf7ff 40%, transparent 60%),
+        linear-gradient(135deg, #e0f1ff 0%, #fdf3ff 45%, #ffe9f4 100%);
+      overflow-x: hidden;
+      overflow-y: auto; /* cho cuộn dọc */
+    }
+
+    .bg-bubbles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+      mix-blend-mode: screen;
+    }
+
+    .bubble {
+      position: absolute;
+      border-radius: 999px;
+      background: radial-gradient(circle at 20% 20%, #ffffff, transparent 60%);
+      opacity: 0.45;
+      filter: blur(1px);
+      animation: bubbleFloat 18s linear infinite;
+    }
+
+    .bubble:nth-child(1) { width: 220px; height: 220px; top: 60%; left: 4%; animation-duration: 26s; }
+    .bubble:nth-child(2) { width: 180px; height: 180px; top: 10%; left: 65%; animation-duration: 22s; }
+    .bubble:nth-child(3) { width: 260px; height: 260px; top: 70%; left: 75%; animation-duration: 28s; }
+    .bubble:nth-child(4) { width: 140px; height: 140px; top: 20%; left: 15%; animation-duration: 20s; }
+
+    @keyframes bubbleFloat {
+      0% { transform: translate3d(0, 0, 0); opacity: 0.4; }
+      50% { transform: translate3d(0, -30px, 0); opacity: 0.7;}
+      100% { transform: translate3d(0, 0, 0); opacity: 0.4;}
+    }
+
+    .app {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+    }
+
+    .screen {
+      position: absolute;
+      inset: 0;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+    }
+
+    .screen.active {
+      display: flex;
+      animation: screenIn 0.55s ease-out forwards;
+    }
+
+    @keyframes screenIn {
+      from { opacity: 0; transform: scale(0.96); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    .panel {
+      width: 100%;
+      max-width: 430px;
+      min-height: 520px;
+      border-radius: 28px;
+      border: 1px solid var(--glass-border);
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.96));
+      box-shadow:
+        0 24px 60px rgba(15, 23, 42, 0.25),
+        0 0 0 1px rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(26px) saturate(1.4);
+      -webkit-backdrop-filter: blur(26px) saturate(1.4);
+      padding: 22px 20px 70px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.8), transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(255, 235, 255, 0.6), transparent 60%);
+      mix-blend-mode: screen;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .panel-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    h1, h2, h3 {
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #111827;
+    }
+    h1 { font-size: 1.7rem; margin-bottom: 12px; }
+    h2 { font-size: 1.3rem; margin-bottom: 8px; }
+
+    p {
+      font-size: 0.97rem;
+      line-height: 1.6;
+      color: var(--text-soft);
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      align-self: flex-start;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      color: #4b5563;
+      margin-bottom: 10px;
+      animation: floatTag 3s ease-in-out infinite;
+    }
+
+    .tag-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #f97373, #fbbf24);
+      box-shadow: 0 0 12px rgba(248, 113, 113, 0.9);
+    }
+
+    @keyframes floatTag {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-2px); }
+    }
+
+    .login-lock-emoji {
+      font-size: 2.4rem;
+      margin-bottom: 8px;
+      animation: lockBounce 1.8s ease-in-out infinite;
+    }
+
+    @keyframes lockBounce {
+      0%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-4px); }
+    }
+
+    .login-subtitle {
+      font-size: 0.9rem;
+      margin-bottom: 18px;
+      color: var(--text-soft-light);
+    }
+
+    .login-avatar-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .login-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 999px;
+      padding: 3px;
+      background: conic-gradient(from 120deg,#fecaca,#fce7f3,#bbf7d0,#bfdbfe,#fecaca);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: avatarSpin 7s linear infinite;
+      cursor: pointer;
+    }
+
+    @keyframes avatarSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .login-avatar-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      background:
+        radial-gradient(circle at 0% 0%, #ffffff, #e5e7eb);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #111827;
+      font-weight: 700;
+      font-size: 1.4rem;
+      text-shadow: 0 3px 10px rgba(255, 255, 255, 0.8);
+      overflow: hidden;
+      position: relative;
+    }
+
+    #avatar-initials {
+      z-index: 1;
+    }
+
+    #avatar-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      object-fit: cover;
+      display: none;
+    }
+
+    .login-avatar-hint {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      text-align: center;
+    }
+
+    form {
+      margin-top: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    label {
+      font-size: 0.8rem;
+      text-align: left;
+      color: #6b7280;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .input-shell {
+      position: relative;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      padding: 2px 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow:
+        0 5px 12px rgba(148, 163, 184, 0.35);
+      transition: box-shadow 0.18s ease, border-color 0.18s ease,
+                  transform 0.18s ease;
+    }
+
+    .input-shell:focus-within {
+      border-color: #f97373;
+      box-shadow:
+        0 7px 18px rgba(248, 113, 113, 0.32),
+        0 0 0 1px rgba(248, 113, 113, 0.25);
+      transform: translateY(-1px);
+    }
+
+    .input-shell input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      padding: 8px 0;
+      color: #111827;
+      font-size: 0.95rem;
+    }
+
+    .input-shell input::placeholder {
+      color: #9ca3af;
+    }
+
+    .input-shell span.prefix {
+      font-size: 0.86rem;
+      color: #9ca3af;
+    }
+
+    .password-group {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(6px) scale(0.98);
+      transition:
+        max-height 0.45s ease,
+        opacity 0.45s ease,
+        transform 0.45s ease;
+    }
+
+    .password-group.visible {
+      max-height: 120px;
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .hint {
+      font-size: 0.76rem;
+      color: #6b7280;
+      margin-top: 4px;
+      text-align: left;
+    }
+
+    .error {
+      margin-top: 4px;
+      font-size: 0.8rem;
+      color: var(--error);
+      min-height: 16px;
+      text-align: left;
+    }
+
+    .btn {
+      margin-top: 12px;
+      border-radius: 999px;
+      border: none;
+      padding: 11px 22px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      font-weight: 600;
+      background:
+        radial-gradient(circle at 0% 0%, #ffffff, transparent 60%),
+        linear-gradient(135deg, #f97373, #fb7185, #fbbf24);
+      color: #111827;
+      box-shadow:
+        0 12px 24px rgba(248, 113, 113, 0.35),
+        0 0 0 1px rgba(255, 255, 255, 0.6);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px) scale(1.01);
+      box-shadow:
+        0 14px 26px rgba(248, 113, 113, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.9);
+      filter: brightness(1.03);
+    }
+
+    .btn:active {
+      transform: translateY(1px) scale(0.98);
+      box-shadow:
+        0 8px 18px rgba(148, 163, 184, 0.5);
+      filter: brightness(0.96);
+    }
+
+    /* Verifying */
+    .spinner-orbit {
+      width: 70px;
+      height: 70px;
+      border-radius: 999px;
+      border: 2px dashed rgba(148, 163, 184, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 14px;
+      position: relative;
+      animation: orbitPulse 4s ease-in-out infinite;
+    }
+
+    .spinner-orbit::before {
+      content: "";
+      width: 60%;
+      height: 60%;
+      border-radius: inherit;
+      background: radial-gradient(circle at 30% 20%, #ffffff, #fecaca);
+      box-shadow: 0 0 14px rgba(248, 113, 113, 0.6);
+      animation: spinInner 1.1s linear infinite;
+    }
+
+    @keyframes orbitPulse {
+      0%,100% { transform: scale(1); opacity: 0.85; }
+      50% { transform: scale(1.08); opacity: 1; }
+    }
+
+    @keyframes spinInner {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .verify-status {
+      font-size: 0.95rem;
+      margin-top: 6px;
+    }
+
+    /* HELLO screen - canh giữa */
+    #screen-hello .panel-inner {
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    #hello-typing {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-align: center;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #111827, #4b5563, #f97373);
+      -webkit-background-clip: text;
+      color: transparent;
+      min-height: 3.4em;
+      margin: 0 0 40px 0; /* đẩy xuống giữa */
+      line-height: 1.1;
+    }
+
+    #hello-typing.fade-in {
+      animation: helloIn 0.5s ease-out forwards;
+    }
+    #hello-typing.fade-out {
+      animation: helloOut 0.4s ease-out forwards;
+    }
+
+    @keyframes helloIn {
+      from { opacity: 0; transform: translateY(10px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes helloOut {
+      from { opacity: 1; transform: translateY(0); }
+      to   { opacity: 0; transform: translateY(-8px); }
+    }
+
+    .tap-indicator {
+      font-size: 0.8rem;
+      color: #6b7280;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      animation: bounceTap 1.3s infinite ease-in-out;
+    }
+
+    .tap-dot {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.9);
+      font-size: 1rem;
+      color: #4b5563;
+      box-shadow: 0 6px 10px rgba(148, 163, 184, 0.5);
+    }
+
+    @keyframes bounceTap {
+      0%, 100% { transform: translateY(0); opacity: 0.7; }
+      50% { transform: translateY(-3px); opacity: 1;}
+    }
+
+    .typing {
+      min-height: 90px;
+      font-size: 0.98rem;
+      margin-bottom: 18px;
+      text-align: left;
+      color: var(--text-soft);
+    }
+
+    .typing span.caret {
+      display: inline-block;
+      width: 8px;
+      height: 1.2em;
+      background: #f97373;
+      margin-left: 2px;
+      animation: caretBlink 0.7s infinite;
+      vertical-align: bottom;
+    }
+
+    @keyframes caretBlink {
+      0%, 40% { opacity: 1; }
+      60%, 100% { opacity: 0; }
+    }
+
+    .happy-title {
+      font-size: 1.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      text-align: center;
+      background: linear-gradient(135deg, #111827, #f97373, #fbbf24);
+      -webkit-background-clip: text;
+      color: transparent;
+      animation: happyGlow 1.7s ease-in-out infinite alternate;
+    }
+
+    @keyframes happyGlow {
+      0% {
+        text-shadow:
+          0 0 6px rgba(249, 250, 251, 0.5),
+          0 0 18px rgba(248, 113, 113, 0.6);
+      }
+      100% {
+        text-shadow:
+          0 0 12px rgba(248, 250, 252, 0.7),
+          0 0 26px rgba(251, 191, 36, 0.8);
+      }
+    }
+
+    .warp-card {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      text-align: center;
+    }
+
+    .warp-orbit {
+      width: 150px;
+      height: 150px;
+      border-radius: 999px;
+      border: 1px dashed rgba(148, 163, 184, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: visible;
+      animation: warpBreath 10s ease-in-out infinite;
+    }
+
+    .warp-core {
+      width: 52px;
+      height: 52px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 20%, #ffffff, #fecaca);
+      box-shadow:
+        0 0 26px rgba(248, 113, 113, 0.9),
+        0 0 40px rgba(251, 191, 36, 0.8);
+      animation: warpCorePulse 2s ease-in-out infinite;
+    }
+
+    .warp-star {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #fefce8;
+      box-shadow: 0 0 10px rgba(252, 211, 77, 0.9);
+      animation: warpStarOrbit 4s linear infinite;
+    }
+
+    .warp-star:nth-child(2) { top: -6px; left: 50%; transform-origin: 50px 50px; }
+    .warp-star:nth-child(3) { bottom: -6px; right: 50%; transform-origin: -40px -40px; }
+    .warp-star:nth-child(4) { left: -6px; top: 50%; transform-origin: 40px -50px; }
+    .warp-star:nth-child(5) { right: -6px; top: 50%; transform-origin: -40px 40px; }
+
+    @keyframes warpBreath {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+
+    @keyframes warpCorePulse {
+      0%,100% { transform: scale(1); }
+      40% { transform: scale(1.12); }
+    }
+
+    @keyframes warpStarOrbit {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    /* STORY CARD, BLESSING CARD, FINAL CARD */
+.story-card,
+.blessing-card,
+.final-card {
+  margin-top: 10px;
+  border-radius: 26px;                 /* bo góc nhiều hơn cho tròn hẳn */
+  padding: 18px 16px;
+  background: rgba(255, 255, 255, 0.9); /* trắng trong suốt nhẹ */
+  border: 1px solid rgba(209, 213, 219, 0.6);
+  box-shadow:
+    0 10px 22px rgba(15, 23, 42, 0.12); /* shadow mềm hơn */
+  text-align: left;
+  max-height: 9999px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.story-card:hover,
+.blessing-card:hover,
+.final-card:hover {
+  transform: translateY(-1px) scale(1.005);
+  box-shadow:
+    0 14px 28px rgba(15, 23, 42, 0.18);
+}
+
+    .story-heading {
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+      color: #111827;
+    }
+
+    .story-text p {
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .story-text p.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .story-text p + p { margin-top: 8px; }
+
+    /* GUESS */
+    #guess-text {
+      font-size: 1.25rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      line-height: 1.6;
+      text-align: center;
+      background: linear-gradient(135deg, #111827, #f97373, #fbbf24);
+      -webkit-background-clip: text;
+      color: transparent;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      margin-top: 8px;
+    }
+
+    #guess-text.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .mini-heading {
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: #9ca3af;
+      margin-bottom: 6px;
+    }
+
+    .blessing-line {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+      margin-bottom: 6px;
+      font-size: 0.95rem;
+      color: #374151;
+    }
+
+    .blessing-line.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Blessing card riêng dài: cho phép scroll */
+    #screen-blessing .blessing-card {
+      max-height: 280px;
+      overflow-y: auto;
+    }
+
+    /* FINAL QUESTION & PHOTO */
+    .final-big {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #111827, #4f46e5, #ec4899);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .photo-stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    #final-photo {
+      position: relative;
+      width: 100%;
+      max-width: 320px;
+      aspect-ratio: 4 / 3;
+      border-radius: 24px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #e5e7eb, #f3f4f6);
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      box-shadow:
+        0 18px 36px rgba(15, 23, 42, 0.22);
+    }
+
+    .photo-piece {
+      position: absolute;
+      background-size: 400% 400%;
+      background-repeat: no-repeat;
+      opacity: 0;
+      transform-origin: center;
+      filter: blur(4px);
+    }
+
+    .photo-piece.shatter {
+      transform:
+        translate(
+          calc((var(--dx, 0) - 0.5) * 260px),
+          calc((var(--dy, 0) - 0.5) * 240px)
+        )
+        scale(0.15)
+        rotate(calc((var(--rot, 0) - 0.5) * 150deg));
+      opacity: 0;
+    }
+
+    .photo-piece.assemble {
+      transition:
+        transform 2.3s cubic-bezier(0.16, 0.9, 0.18, 1.0),
+        opacity 1.9s ease-out,
+        filter 2.0s ease-out;
+      transform: translate(0, 0) scale(1) rotate(0deg);
+      opacity: 1;
+      filter: blur(0);
+    }
+
+    .photo-glow-ring {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.7),
+        0 0 25px rgba(129, 140, 248, 0.75);
+      pointer-events: none;
+      opacity: 0;
+      animation: photoGlow 2.2s ease-out forwards;
+      animation-delay: 1.8s;
+    }
+
+    @keyframes photoGlow {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    .firework-text {
+      font-size: 0.9rem;
+      text-align: left;
+      line-height: 1.7;
+      background: linear-gradient(135deg, #111827, #4f46e5, #ec4899, #f97373);
+      -webkit-background-clip: text;
+      color: transparent;
+      min-height: 7em;
+      white-space: pre-wrap;
+      text-shadow: 0 0 0 rgba(0,0,0,0);
+    }
+
+    .firework-text.typing {
+      text-shadow:
+        0 0 10px rgba(248, 250, 252, 0.9),
+        0 0 18px rgba(129, 140, 248, 0.8);
+      animation: fireworkGlow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes fireworkGlow {
+      0% {
+        text-shadow:
+          0 0 6px rgba(248, 250, 252, 0.8),
+          0 0 14px rgba(129, 140, 248, 0.7);
+      }
+      100% {
+        text-shadow:
+          0 0 12px rgba(248, 250, 252, 0.95),
+          0 0 24px rgba(236, 72, 153, 0.9);
+      }
+    }
+
+    .island-btn {
+      border-radius: 999px;
+      padding: 9px 22px;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      background:
+        radial-gradient(circle at 0% 0%, rgba(255,255,255,1), transparent 55%),
+        linear-gradient(135deg, #e5e7eb, #f9fafb);
+      color: #374151;
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow:
+        0 10px 18px rgba(148, 163, 184, 0.5);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    }
+
+    .island-btn:hover {
+      transform: translateY(-1px) scale(1.01);
+      background:
+        radial-gradient(circle at 0% 0%, rgba(255,255,255,1), transparent 50%),
+        linear-gradient(135deg, #f3f4f6, #ffffff);
+      box-shadow:
+        0 13px 24px rgba(148, 163, 184, 0.6);
+    }
+
+    .island-btn:active {
+      transform: translateY(1px) scale(0.98);
+      box-shadow:
+        0 8px 16px rgba(148, 163, 184, 0.7);
+    }
+
+    .island-btn::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 10px rgba(34, 197, 94, 0.9);
+    }
+
+    .signature {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.86);
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      color: #4b5563;
+      box-shadow: 0 8px 20px rgba(148, 163, 184, 0.7);
+      z-index: 10;
+    }
+
+    .signature img {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+    }
+
+    .signature span.label {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .mt-10 { margin-top: 10px; }
+    .mt-16 { margin-top: 16px; }
+    .mt-20 { margin-top: 20px; }
+    .mt-auto { margin-top: auto; }
+
+    .btn-story-next { margin-top: 26px; } /* tách nút khỏi card hơn */
+
+    @media (max-width: 430px) {
+      .panel {
+        max-width: 100%;
+        min-height: 540px;
+        padding: 20px 16px 70px;
+      }
+      #hello-typing {
+        font-size: 1.9rem;
+        letter-spacing: 0.12em;
+      }
+      #final-photo { max-width: 290px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-bubbles">
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+  </div>
+
+  <main class="app">
+    <!-- SCREEN 1: LOGIN -->
+    <section id="screen-login" class="screen active">
+      <div class="panel">
+        <div class="panel-inner">
+          <div class="tag">
+            <span class="tag-dot"></span>
+            <span>apple style • học trò session</span>
+          </div>
+
+          <div class="login-lock-emoji">🔒</div>
+          <h1>Đăng nhập một lần, truy cập tất cả</h1>
+          <p class="login-subtitle">
+            Mở khóa “tài khoản học trò” là cả vũ trụ kỉ niệm cấp 2 giữa Híu và Thanh Nga sẽ tự động hiện ra.
+          </p>
+
+          <div class="login-avatar-wrapper">
+            <div class="login-avatar" id="login-avatar">
+              <div class="login-avatar-inner">
+                <span id="avatar-initials">TN</span>
+                <img id="avatar-image" alt="Avatar Thanh Nga" />
+              </div>
+            </div>
+            <p class="login-avatar-hint">Nhấn vào avatar để đổi hình nhé ✨</p>
+          </div>
+
+          <form id="login-form" autocomplete="off">
+            <div class="field-group">
+              <label for="login-username">Tên người dùng</label>
+              <div class="input-shell">
+                <span class="prefix">@</span>
+                <input
+                  id="login-username"
+                  type="text"
+                  placeholder="Nhập tên: gợi ý là một cái tên rất thân quen..."
+                />
+              </div>
+            </div>
+
+            <div id="password-group" class="field-group password-group">
+              <label for="login-password">Mật khẩu</label>
+              <div class="input-shell">
+                <span class="prefix">•••</span>
+                <input
+                  id="login-password"
+                  type="password"
+                  placeholder="Nhập mật khẩu bí mật..."
+                />
+              </div>
+            </div>
+
+            <div id="login-error" class="error"></div>
+
+            <button type="submit" class="btn">Đăng nhập</button>
+            <p class="hint">
+              Hint nhỏ: tên chính xác là <strong>Nga</strong>, còn mật khẩu thì…
+              thử nhớ xem có gì liên quan đến <strong>01/12</strong> nha 👀
+            </p>
+          </form>
+
+          <!-- input ẩn để chọn file avatar -->
+          <input type="file" id="avatar-input" accept="image/*" hidden />
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 2: VERIFYING -->
+    <section id="screen-verifying" class="screen">
+      <div class="panel">
+        <div class="panel-inner" style="align-items:center; text-align:center;">
+          <div class="tag">
+            <span class="tag-dot"></span>
+            <span>system • verifying</span>
+          </div>
+
+          <h2>Đang xác minh thông tin…</h2>
+          <div class="spinner-orbit">
+            <div class="warp-core"></div>
+          </div>
+          <p id="verify-message" class="verify-status">
+            Vui lòng đợi trong giây lát, hệ thống đang kiểm tra “độ thân” giữa hai đứa...
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 3: HELLO MULTI-LANGUAGE -->
+    <section id="screen-hello" class="screen">
+      <div class="panel">
+        <div class="panel-inner">
+          <h2 id="hello-typing"></h2>
+          <div class="tap-indicator">
+            <div class="tap-dot">⬤</div>
+            <span>Chạm nhẹ bất kì đâu để tiếp tục</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 4: MAIN MESSAGE -->
+    <section id="screen-main-message" class="screen">
+      <div class="panel">
+        <div class="panel-inner">
+          <div class="tag">
+            <span class="tag-dot"></span>
+            <span>birthday • spotlight mode</span>
+          </div>
+
+          <div id="happy-title" class="happy-title mt-10">
+            ᕼᗩᑭᑭY ᗷIᖇTᕼᗞᗩY
+          </div>
+
+          <div id="intro-message" class="typing"></div>
+
+          <button id="btn-to-warp" class="btn mt-16">Bắt đầu xoay chuyển vũ trụ</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 5: WARP -->
+    <section id="screen-warp" class="screen">
+      <div class="panel">
+        <div class="panel-inner">
+          <div class="warp-card">
+            <div class="warp-orbit">
+              <div class="warp-core"></div>
+              <div class="warp-star"></div>
+              <div class="warp-star"></div>
+              <div class="warp-star"></div>
+              <div class="warp-star"></div>
+            </div>
+            <h2>Đang xoay chuyển cả không gian &amp; vũ trụ…</h2>
+            <p style="text-align:center; max-width: 320px;">
+              Trong khoảng vài giây nữa, mọi tín hiệu của vũ trụ sẽ gom lại thành một điểm:
+              tuổi thơ cấp 2 đầy trong trẻo của hai đứa.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 6: STORY INTRO (CHÀO BẠN THÂN) -->
+    <section id="screen-story" class="screen">
+      <div class="panel">
+        <div class="panel-inner">
+          <div class="tag">
+            <span class="tag-dot"></span>
+            <span>school • chapter one</span>
+          </div>
+
+          <div class="story-card">
+            <h2 class="story-heading">(•˕ •マ.ᐟ Chào bạn thân quen của tôiiii</h2>
+            <div class="story-text" id="story-text">
+              <p>
+                Hôm nay là sinh nhật bạn phải không? Híu đây, tuy hay quên nhưng ngày sinh nhật của bạn
+                vẫn nhớ <strong>NHƯ IN</strong> đấy nháaaaa.
+              </p>
+              <p>
+                Nhân dịp Híu này học IT thì hôm nay sẽ trổ tài “code nhẹ” cho bạn cùng xem luôn.
+                Không phải phá máy, chỉ là mở một cánh cửa nhỏ bước vào vũ trụ tuổi thơ của hai đứa.
+              </p>
+            </div>
+          </div>
+
+          <button id="btn-story-next" class="btn btn-story-next mt-auto">
+            Tiếp tục khám phá
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 7: GUESS / CHÚC MỪNG SINH NHẬT + NHẮN GỬI NHỎ -->
+    <section id="screen-guess" class="screen">
+      <div class="panel">
+        <div class="panel-inner">
+          <div id="guess-text"></div>
+
+          <div class="blessing-card mt-16" id="mini-blessing">
+            <div class="mini-heading">Nhắn gửi nhỏ cho tuổi mới ✨</div>
+            <p class="blessing-line">
+              Tuổi mới đến rồi, chúc Nga luôn vững vàng, mạnh mẽ và biến mọi ước mơ của mình thành sự thật.
+            </p>
+            <p class="blessing-line">
+              Hãy sống một đời thật nhiệt huyết, thật rực rỡ và hạnh phúc theo cách của riêng bạn.
+            </p>
+            <p class="blessing-line">
+              Dù thế giới ngoài kia có ồn ào đến đâu, nhớ rằng bạn luôn xứng đáng được yêu thương và trân trọng.
+            </p>
+            <p class="blessing-line">
+              Tỏa sáng theo cách của Ngaaa nha ✨ ದ್ದಿ(•˕•マ)!
+            </p>
+          </div>
+
+          <button id="btn-to-blessing" class="island-btn mt-auto">
+            Đi tiếp tới một chút tuổi thơ
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 8: BLESSING / MỘT CHÚT TUỔI THƠ -->
+    <section id="screen-blessing" class="screen">
+      <div class="panel">
+        <div class="panel-inner">
+          <h2 style="margin-bottom: 8px;">Một chút tuổi thơ ✨</h2>
+          <p style="font-size:0.9rem; color:#6b7280; margin-bottom: 12px;">
+            Mọi thứ phía dưới được viết lên như chữ phấn trên nền bảng, nhưng lần này là bảng trong tim hai đứa.
+          </p>
+
+          <div class="blessing-card" id="blessing-container">
+            <p class="blessing-line">
+              Tuổi thơ của chúng ta giống như một bức tranh đồng quê trải dài vô tận, nơi cánh đồng lúa mỗi chiều lại
+              tỏa ra mùi thơm ngọt dịu, nơi gió thổi qua nghe cũng hiền như nụ cười của những đứa trẻ chạy tung tăng
+              sau buổi tan học.
+            </p>
+            <p class="blessing-line">
+              Và giữa khung cảnh mộc mạc ấy, có một cái cây thể dục đứng lặng lẽ như một người bạn già chứng kiến
+              bao kỷ niệm. Dưới tán lá xòe rộng ấy, tớ vẫn nhớ rõ cái buổi chiều hai đứa ngồi cạnh nhau, vừa nói chuyện
+              vừa nghịch mấy chiếc lá rơi, kể cho nhau nghe bao điều mà lúc đó cứ tưởng là chuyện to lắm của tuổi học trò.
+            </p>
+            <p class="blessing-line">
+              Đến ngày chia tay cuối năm cấp 2, tụi mình lại tìm về đúng nơi đó. Cái bóng cây vẫn mát như cũ,
+              chỉ có hai đứa là đã lớn thêm một chút, mang theo những cảm xúc lẫn lộn giữa vui và buồn. Khoảnh khắc ấy giống
+              như cuộn phim cuối cùng của tuổi thơ đang được tua chậm lại — nhẹ nhàng, ấm áp và khó quên.
+            </p>
+            <p class="blessing-line">
+              Và tớ phải nói thật điều này. Nga chính là người đã gieo vào lòng tớ một tia hi vọng đầu tiên. Hồi đó tớ
+              là đứa chẳng ai để ý, chẳng ai rủ chơi, lúc nào cũng cảm giác mình bị tách ra khỏi cả thế giới.
+            </p>
+            <p class="blessing-line">
+              Nhưng Nga vẫn lại gần, vẫn chọn xem tớ là bạn, vẫn lắng nghe, vẫn quan tâm, một điều mà với tớ ngày ấy
+              quý giá như cả bầu trời.
+            </p>
+            <p class="blessing-line">
+              Cảm ơn Nga, vì đã cho tớ thấy lại hình ảnh đẹp nhất của tuổi thơ. Cảm ơn vì đã biến cái tuổi nhỏ đơn độc
+              của tớ thành một miền ký ức có ánh nắng, có tiếng cười, và có một người bạn thật lòng.
+            </p>
+          </div>
+
+          <button id="btn-to-final-question" class="island-btn mt-auto">
+            Tới mảnh ghép cuối cùng
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 9: FINAL QUESTION -->
+    <section id="screen-final-question" class="screen">
+      <div class="panel">
+        <div class="panel-inner" style="text-align:center;">
+          <div class="final-big">VÀ CUỐI CÙNG LÀ</div>
+          <div class="final-card mt-16">
+            <p>
+              Chuẩn bị cho một mảnh ghép nhỏ nữa của vũ trụ – một khoảnh khắc được “đóng băng” lại thành hình ảnh.
+            </p>
+          </div>
+          <button id="btn-show-photo" class="btn mt-auto">
+            Tiếp tục
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 10: FINAL PHOTO + MESSAGE 18 TUỔI -->
+    <section id="screen-final-photo" class="screen">
+      <div class="panel">
+        <div class="panel-inner">
+          <div class="photo-stage">
+            <div id="final-photo"></div>
+            <div class="photo-glow-ring"></div>
+
+            <div class="final-card" style="max-height:none;">
+              <div id="firework-text" class="firework-text">
+𝙷𝚊𝚙𝚙𝚢 𝙱𝚒𝚛𝚝𝚑𝚍𝚊𝚢 - 𝟶𝟸/𝟷𝟸/𝟸𝟶𝟶𝟽 - 𝟶𝟸/𝟷𝟸/𝟸𝟶𝟸𝟻
+Big thanks vì bạn đã dành những thanh xuân tuổi học trò cho Híu. Mình rấtttt Appreciate điều đó >⩊<
+
+Chỉ mong rằng, không chỉ hôm nay mà mỗi ngày trôi qua, cuộc sống của you đều được lấp đầy bởi những happy vibes và những khoảnh khắc unforgettable.
+
+Happy Birthday! 🎂 Thanh Nga nhéee, Tuổi 18… nghe thôi là đã thấy cả một bầu trời trong veo mở ra trước mắt rồi. Tuổi 18 là lúc người ta vừa đủ lớn để hiểu mình muốn gì, nhưng vẫn còn đủ trẻ để mơ những giấc mơ thật rộng. Nó đẹp như khoảnh khắc bình minh, dịu dàng, trong sáng nhưng đầy hứa hẹn.
+
+Và trong ngày đặc biệt này, Híu thật lòng chúc Nga sẽ bước vào tuổi mới với một trái tim nhẹ nhàng nhưng kiên định. Mong rằng mọi hi vọng Nga gieo xuống đều nảy mầm, mọi ước mơ Nga gửi vào tương lai đều có ngày nở hoa. Con đường phía trước có thể không phải lúc nào cũng bằng phẳng… sẽ có những hôm mệt, có những ngày không ai hiểu, và có những khoảnh khắc muốn bỏ cuộc.
+
+Nhưng Híu tin rằng, chỉ cần Nga giữ được niềm tin và sự ấm áp trong mình, thì mọi thử thách rồi cũng sẽ nhường bước. Cứ đứng dậy, hít một hơi thật sâu và đi tiếp. Tương lai đẹp nhất luôn nằm sau những lần mình không bỏ cuộc.
+
+Chúc Nga tuổi 18 thật rực rỡ, thật hạnh phúc, và luôn tìm thấy ánh sáng của riêng mình trên hành trình phía trước 🎉✨
+              </div>
+            </div>
+
+            <button id="btn-download-photo" class="island-btn mt-16">
+              Tải ảnh này xuống
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="signature">
+    <span class="label">Created by Shota</span>
+    <img id="signature-logo" src="" alt="Logo Shota" />
+    <!-- # LOGO: đổi ở JS với biến LOGO_URL -->
+  </div>
+
+  <!-- # NHẠC: file mp3 sẽ được set trong JS ở biến BGM_URL -->
+  <audio id="bgm" preload="auto" loop></audio>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const CORRECT_NAME = "nga";
+      const CORRECT_PASS = "Nga0112";
+      const NAME = "Thanh Nga";
+
+      // # LOGO: Đổi link logo tại đây
+      const LOGO_URL = "shota.png";
+
+      // # ẢNH CUỐI: Đổi link ảnh chụp chung tại đây
+      const FINAL_PHOTO_URL = "THANHNGA.png";
+
+      // # NHẠC: Đổi link file nhạc mp3 tại đây
+      const BGM_URL = "MUSIC.mp3";
+
+      const screens = document.querySelectorAll(".screen");
+      const getScreen = (id) => document.getElementById(id);
+      const showScreen = (id) => {
+        screens.forEach((s) => s.classList.toggle("active", s.id === id));
+      };
+
+      // Logo
+      const logoImg = document.getElementById("signature-logo");
+      if (LOGO_URL && logoImg) logoImg.src = LOGO_URL;
+
+      // BGM
+      const bgm = document.getElementById("bgm");
+      if (bgm && BGM_URL) bgm.src = BGM_URL;
+
+      function playBgm() {
+        if (!bgm || !BGM_URL) return;
+        const playPromise = bgm.play();
+        if (playPromise && typeof playPromise.then === "function") {
+          playPromise.catch(() => {
+            // autoplay bị chặn thì lần click sau vẫn sẽ play
+          });
+        }
+      }
+
+      /* AVATAR ĐỔI ẢNH */
+      const avatarInput = document.getElementById("avatar-input");
+      const loginAvatar = document.getElementById("login-avatar");
+      const avatarImage = document.getElementById("avatar-image");
+      const avatarInitials = document.getElementById("avatar-initials");
+
+      function applyAvatar(src) {
+        if (!avatarImage || !avatarInitials) return;
+        avatarImage.src = src;
+        avatarImage.style.display = "block";
+        avatarInitials.style.display = "none";
+      }
+
+      // Khôi phục avatar từ localStorage
+      try {
+        const storedAvatar = localStorage.getItem("birthdayAvatar");
+        if (storedAvatar) {
+          applyAvatar(storedAvatar);
+        }
+      } catch (e) {
+        // localStorage có thể bị chặn, bỏ qua
+      }
+
+      if (loginAvatar && avatarInput) {
+        loginAvatar.addEventListener("click", () => {
+          avatarInput.click();
+        });
+
+        avatarInput.addEventListener("change", (e) => {
+          const file = e.target.files && e.target.files[0];
+          if (!file) return;
+          if (!file.type.startsWith("image/")) return;
+
+          const reader = new FileReader();
+          reader.onload = (ev) => {
+            const result = ev.target?.result;
+            if (typeof result === "string") {
+              applyAvatar(result);
+              try {
+                localStorage.setItem("birthdayAvatar", result);
+              } catch (err) {
+                // nếu không lưu được thì thôi, avatar vẫn hiển thị phiên này
+              }
+            }
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+
+      /* LOGIN */
+      const loginForm = document.getElementById("login-form");
+      const usernameInput = document.getElementById("login-username");
+      const passwordGroup = document.getElementById("password-group");
+      const passwordInput = document.getElementById("login-password");
+      const loginError = document.getElementById("login-error");
+      let usernameLocked = false;
+
+      function checkUsername() {
+        const name = usernameInput.value.trim().toLowerCase();
+        if (name === CORRECT_NAME) {
+          passwordGroup.classList.add("visible");
+          loginError.textContent = "";
+        } else {
+          passwordGroup.classList.remove("visible");
+        }
+      }
+
+      usernameInput.addEventListener("input", () => {
+        if (usernameLocked) return;
+        checkUsername();
+      });
+
+      loginForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const name = usernameInput.value.trim().toLowerCase();
+        const pass = passwordInput.value.trim();
+
+        if (name !== CORRECT_NAME) {
+          loginError.textContent = "Tên người dùng chưa đúng rồi, thử gõ lại “Nga” nha 📝";
+          passwordGroup.classList.remove("visible");
+          return;
+        }
+
+        if (!pass) {
+          loginError.textContent = "Nhập mật khẩu nữa mới mở được cánh cửa vũ trụ nè 🔑";
+          return;
+        }
+
+        const success = pass === CORRECT_PASS;
+        loginError.textContent = "";
+        startVerifying(success);
+      });
+
+      /* VERIFYING */
+      const verifyMessage = document.getElementById("verify-message");
+
+      function startVerifying(isSuccess) {
+        showScreen("screen-verifying");
+        verifyMessage.style.color = "#4b5563";
+        verifyMessage.textContent =
+          "Vui lòng đợi trong giây lát, hệ thống đang kiểm tra “độ thân” giữa hai đứa...";
+
+        setTimeout(() => {
+          if (isSuccess) {
+            verifyMessage.style.color = "#16a34a";
+            verifyMessage.textContent =
+              "Đăng nhập thành công. Chuẩn bị vào thế giới của Thanh Nga nha! ✅";
+
+            usernameLocked = true;
+            usernameInput.value = "Nga";
+            usernameInput.disabled = true;
+
+            setTimeout(() => {
+              showScreen("screen-hello");
+              startAppleHelloLoop();
+              playBgm(); // Bắt đầu nhạc sau khi login thành công
+            }, 1500);
+          } else {
+            verifyMessage.style.color = "#ef4444";
+            verifyMessage.textContent =
+              "Đăng nhập thất bại, vui lòng thử lại mật khẩu nhé ❌";
+
+            setTimeout(() => {
+              showScreen("screen-login");
+              usernameLocked = true;
+              usernameInput.value = "Nga";
+              usernameInput.disabled = true;
+              passwordGroup.classList.add("visible");
+              passwordInput.value = "";
+              passwordInput.focus();
+              loginError.textContent = "Sai mật khẩu rồi, thử lại một lần nữa nha 🫣";
+            }, 2000);
+          }
+        }, 5000); // 5 giây
+      }
+
+      /* HELLO */
+      const helloScreen = document.getElementById("screen-hello");
+      const helloTyping = document.getElementById("hello-typing");
+
+      const helloList = [
+        { primary: "Hello", secondary: NAME },
+        { primary: "Xin chào", secondary: NAME },
+        { primary: "Hola", secondary: NAME },
+        { primary: "Bonjour", secondary: NAME },
+        { primary: "Ciao", secondary: NAME },
+        { primary: "안녕하세요", secondary: NAME },
+        { primary: "Konnichiwa", secondary: NAME },
+        { primary: "Xin chào người đặc biệt ✨", secondary: "" },
+      ];
+
+      function typeHello(item, callback) {
+        const fullText = item.secondary
+          ? item.primary + "\n" + item.secondary
+          : item.primary;
+
+        helloTyping.className = "";
+        helloTyping.innerHTML = "";
+        helloTyping.classList.add("fade-in");
+
+        let i = 0;
+        const interval = setInterval(() => {
+          const current = fullText.slice(0, i);
+          helloTyping.innerHTML = current.replace(/\n/g, "<br>");
+          i++;
+
+          if (i > fullText.length) {
+            clearInterval(interval);
+            setTimeout(() => {
+              helloTyping.classList.remove("fade-in");
+              helloTyping.classList.add("fade-out");
+              setTimeout(callback, 400);
+            }, 900);
+          }
+        }, 55);
+      }
+
+      function startAppleHelloLoop() {
+        let index = 0;
+        function next() {
+          typeHello(helloList[index], () => {
+            index = (index + 1) % helloList.length;
+            next();
+          });
+        }
+        next();
+      }
+
+      helloScreen.addEventListener("click", () => {
+        startIntroMessage();
+        showScreen("screen-main-message");
+      });
+
+      /* INTRO MESSAGE */
+      const introEl = document.getElementById("intro-message");
+      const btnToWarp = document.getElementById("btn-to-warp");
+
+      const introText =
+        "ദ്ദಿ ˉ͈̀꒳ˉ͈́ )✧ Welcome người con gái tuyệt với Today ! " +
+        "Hôm nay, vũ trụ muốn gửi thông điệp ■■■■ đến cho bạn, " +
+        "hãy Make Them Yours nhéeeeeeeee.";
+
+      function typeText(element, text, speed, callback) {
+        element.innerHTML = "";
+        let i = 0;
+        const spanCaret = document.createElement("span");
+        spanCaret.className = "caret";
+        const interval = setInterval(() => {
+          element.textContent = text.slice(0, i);
+          element.appendChild(spanCaret);
+          i++;
+          if (i > text.length) {
+            clearInterval(interval);
+            if (callback) callback();
+          }
+        }, speed);
+      }
+
+      function startIntroMessage() {
+        typeText(introEl, introText, 30, () => {});
+      }
+
+      btnToWarp.addEventListener("click", () => {
+        showScreen("screen-warp");
+        setTimeout(() => {
+          showScreen("screen-story");
+          animateStoryIntro();
+        }, 10000); // 10 giây
+      });
+
+      /* STORY INTRO */
+      const storyTextBlock = document.getElementById("story-text");
+      const btnStoryNext = document.getElementById("btn-story-next");
+
+      function animateStoryIntro() {
+        const ps = storyTextBlock.querySelectorAll("p");
+        ps.forEach((p, i) => {
+          setTimeout(() => p.classList.add("visible"), i * 700);
+        });
+      }
+
+      btnStoryNext.addEventListener("click", () => {
+        startGuessSequence();
+        showScreen("screen-guess");
+      });
+
+      /* GUESS + MINI BLESSING */
+      const guessTextEl = document.getElementById("guess-text");
+      const guessPhrases = [
+        "CHÚC MỪNG SINH NHẬT,",
+        "BẠN THÂN CỦA TÔI",
+      ];
+
+      const miniBlessing = document.getElementById("mini-blessing");
+      const miniLines = miniBlessing.querySelectorAll(".blessing-line");
+
+      function startGuessSequence() {
+        guessTextEl.textContent = "";
+        guessTextEl.classList.remove("visible");
+        miniLines.forEach(l => l.classList.remove("visible"));
+        let idx = 0;
+
+        function displayPhrase() {
+          if (idx >= guessPhrases.length) {
+            setTimeout(() => {
+              revealMiniBlessing();
+            }, 500);
+            return;
+          }
+          guessTextEl.style.opacity = "0";
+          setTimeout(() => {
+            guessTextEl.textContent = guessPhrases[idx];
+            guessTextEl.classList.add("visible");
+            idx++;
+            setTimeout(displayPhrase, 1300);
+          }, 200);
+        }
+        displayPhrase();
+      }
+
+      function revealMiniBlessing() {
+        miniLines.forEach((line, i) => {
+          setTimeout(() => {
+            line.classList.add("visible");
+          }, i * 800);
+        });
+      }
+
+      const btnToBlessing = document.getElementById("btn-to-blessing");
+      btnToBlessing.addEventListener("click", () => {
+        showScreen("screen-blessing");
+        playBlessings();
+      });
+
+      /* BLESSING / TUỔI THƠ */
+      const blessingContainer = document.getElementById("blessing-container");
+      const blessingLines = blessingContainer.querySelectorAll(".blessing-line");
+      const btnToFinalQuestion = document.getElementById("btn-to-final-question");
+
+      function playBlessings() {
+        blessingLines.forEach((line) => line.classList.remove("visible"));
+        blessingLines.forEach((line, i) => {
+          setTimeout(() => line.classList.add("visible"), i * 1000);
+        });
+      }
+
+      btnToFinalQuestion.addEventListener("click", () => {
+        showScreen("screen-final-question");
+      });
+
+      /* FINAL QUESTION & PHOTO */
+      const btnShowPhoto = document.getElementById("btn-show-photo");
+      const finalPhotoContainer = document.getElementById("final-photo");
+      const fireworkEl = document.getElementById("firework-text");
+      const fireworkRawText = fireworkEl.textContent.trim();
+
+      btnShowPhoto.addEventListener("click", () => {
+        setupFinalPhoto();
+        showScreen("screen-final-photo");
+        triggerPhotoAssemble();
+        animateFireworkText();
+      });
+
+      function setupFinalPhoto() {
+        finalPhotoContainer.innerHTML = "";
+        const cols = 5;
+        const rows = 4;
+
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            const piece = document.createElement("div");
+            piece.className = "photo-piece shatter";
+            const wPercent = 100 / cols;
+            const hPercent = 100 / rows;
+            piece.style.width = wPercent + "%";
+            piece.style.height = hPercent + "%";
+            piece.style.left = c * wPercent + "%";
+            piece.style.top = r * hPercent + "%";
+            const bgX = (c / (cols - 1)) * 100;
+            const bgY = (r / (rows - 1)) * 100;
+            piece.style.backgroundImage = FINAL_PHOTO_URL
+              ? `url("${FINAL_PHOTO_URL}")`
+              : "linear-gradient(135deg, #fecaca, #bfdbfe)";
+            piece.style.backgroundPosition = `${bgX}% ${bgY}%`;
+            piece.style.setProperty("--dx", Math.random().toString());
+            piece.style.setProperty("--dy", Math.random().toString());
+            piece.style.setProperty("--rot", Math.random().toString());
+            finalPhotoContainer.appendChild(piece);
+          }
+        }
+      }
+
+      function triggerPhotoAssemble() {
+        const pieces = finalPhotoContainer.querySelectorAll(".photo-piece");
+        pieces.forEach((piece, i) => {
+          setTimeout(() => {
+            piece.classList.add("assemble");
+          }, 300 + i * 90);
+        });
+      }
+
+      function animateFireworkText() {
+        fireworkEl.textContent = "";
+        fireworkEl.classList.add("typing");
+        let i = 0;
+        const text = fireworkRawText;
+        const interval = setInterval(() => {
+          fireworkEl.textContent = text.slice(0, i);
+          i++;
+          if (i > text.length) {
+            clearInterval(interval);
+          }
+        }, 18);
+      }
+
+      /* DOWNLOAD PHOTO */
+      const btnDownloadPhoto = document.getElementById("btn-download-photo");
+      btnDownloadPhoto.addEventListener("click", () => {
+        if (!FINAL_PHOTO_URL) {
+          alert("Chưa cấu hình link ảnh cuối cùng (FINAL_PHOTO_URL).");
+          return;
+        }
+        const link = document.createElement("a");
+        link.href = FINAL_PHOTO_URL;
+        link.download = "happy-birthday-thanh-nga";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
+    });
+  </script>
+</body>
+</html>
